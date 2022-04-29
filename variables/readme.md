@@ -1,40 +1,5 @@
 
 **Variable**
-
-main.tf
-```yaml
-resource "local_file" "pet" { 
-  filename = var.filename
-  content = var.content 
-} 
-resource "random_pet" "my-pet" { 
-  prefix = var.prefix 
-  separator = var.separator
-  length = var.length 
-}     
-```
-variables.tf
-```yaml
-variable "filename" { 
-  default = "/root/pets.txt"
-  type = string
-} 
-variable "content" { 
-  default = "We love pets!" 
-  type = string
-} 
-variable "prefix" { 
-  default = "Mrs"
-  type = string
-} 
-variable "separator" { 
-  default = "." 
-} 
-variable "length" { 
-  default = "1" 
-  type = number
-}
-```
 ![image](https://user-images.githubusercontent.com/3519706/165933751-ec3883a6-ac25-41ed-a4b1-d43ae366a004.png)
 
 **Variable Type**
