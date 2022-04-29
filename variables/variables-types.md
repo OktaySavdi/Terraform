@@ -1,5 +1,5 @@
 **Variable Type**
-![image](https://user-images.githubusercontent.com/3519706/165934444-d51f439b-44cb-471a-b53e-730d340ed024.png)
+![image](https://user-images.githubusercontent.com/3519706/165938290-6e1515d9-064f-4b38-99c6-335e13d2c520.png)
 
 ![image](https://user-images.githubusercontent.com/3519706/165934629-132529d5-aab6-4aa3-8e3b-67c6ebc36224.png)
 
