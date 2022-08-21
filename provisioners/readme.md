@@ -1,5 +1,5 @@
 
-### Interpreter Examples
+### local-exec Examples
 ```hcl
 resource "aws_instance" "web" {
   # ...
@@ -9,6 +9,7 @@ resource "aws_instance" "web" {
   }
 }
 ```
+### Interpreter Examples
 ```hcl
 resource "null_resource" "example1" {
   provisioner "local-exec" {
