@@ -1,5 +1,25 @@
 example1
 ```tf
+variable "region" {
+  type = map(string)
+  default = {
+    dev  = "westeurope"
+    test = "germanywestcentral"
+    prod = "canadacentral"
+  }
+}
+
+resource "azurerm_resource_group" "rg" {
+  for_each = var.region
+  name     = "test"
+  location = each.value
+
+  tags = local.common_tags
+}
+```
+
+example2
+```tf
 variable "define_group" {
   type = map(any)
   default = {
@@ -26,7 +46,7 @@ resource "harbor_project_member_group" "main" {
   ldap_group_dn = each.value.ldap_group_dn
 }
 ```
-example2
+example3
 ```tf
 variable "ip-config" {
   default = [
