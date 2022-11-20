@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/3519706/165941838-b9d2b207-f30a-4b86-8fc6-fd1f5263f792.png)
 ![image](https://user-images.githubusercontent.com/3519706/165941970-79645de1-810b-42b4-ad57-7384a659f687.png)
 example1
-```yaml
+```tf
 variable "define_group" {
   type = map(any)
   default = {
@@ -18,7 +18,7 @@ variable "define_group" {
   }
 }
 ```
-```yaml
+```tf
 resource "harbor_project_member_group" "main" {
   project_id    = harbor_project.main.id
   for_each      = var.define_group
@@ -29,7 +29,7 @@ resource "harbor_project_member_group" "main" {
 }
 ```
 example2
-```yaml
+```tf
 variable "ip-config" {
   default = [
     {
