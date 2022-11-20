@@ -35,8 +35,7 @@ variable "define_group" {
     }
   }
 }
-```
-```tf
+
 resource "harbor_project_member_group" "main" {
   project_id    = harbor_project.main.id
   for_each      = var.define_group
