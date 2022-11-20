@@ -11,6 +11,7 @@ locals {
     }
   ]
 }
+
 resource "aws_security_group" "main" {
   name   = "core-sg"
   vpc_id = aws_vpc.vpc.id
@@ -52,6 +53,7 @@ variable "web_ingress" {
     }
   }
 }
+
 resource "aws_security_group" "main" {
   name   = "core-sg"
   vpc_id = aws_vpc.vpc.id
