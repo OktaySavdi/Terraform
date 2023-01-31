@@ -78,3 +78,35 @@ resource "azurerm_network_interface" "example" {
   }
 }
 ```
+example4
+```tf
+variable "assign_group" {
+  description = "Group ids"
+  type        = list(any)
+}
+
+resource "kubernetes_role_binding" "group_role_binding" {
+  count    = length(var.assign_group)
+  metadata {
+    name        = "${var.namespace}-role-binding"
+    namespace   = var.namespace
+    labels      = var.labels
+    annotations = var.annotations
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${var.namespace}-access-read-only"
+  }
+
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Group"
+    name      = "${var.assign_group[count.index]}"
+    namespace   = var.namespace
+  }
+}
+
+assign_group     = ["35111183-211a0-1111-b611-11111", "4222285-22227-42223-a222-b222dc"]
+```
