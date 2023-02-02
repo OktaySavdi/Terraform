@@ -94,7 +94,32 @@ variable "assign_group" {
   description = "Defines the users and groups that will be admins in the namespace."
 }
 
-# Groups
+resource "kubernetes_role_binding_v1" "group_role_binding" {
+  
+  metadata {
+    name        = "${var.namespace}-role-binding"
+    namespace   = var.namespace
+    labels      = var.labels
+    annotations = var.annotations
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${var.namespace}-access-read-only"
+  }
+  
+  # Users
+  dynamic "subject" {
+    for_each = var.assign_group.users
+    content {
+      kind      = "User"
+      name      = subject.value
+      api_group = "rbac.authorization.k8s.io"
+    }
+  }
+
+  # Groups
   dynamic "subject" {
     for_each = var.assign_group.groups
     content {
@@ -104,6 +129,7 @@ variable "assign_group" {
         api_group = "rbac.authorization.k8s.io"
     }
   }
+}
  
 #call
  assign_group = {
