@@ -17,8 +17,41 @@ resource "azurerm_resource_group" "rg" {
   tags = local.common_tags
 }
 ```
-
 example2
+```tf
+resource "azurerm_role_assignment" "assgin_role" {
+  count              = length(var.assignments)
+  scope              = var.assignments[count.index].scope
+  role_definition_id = var.assignments[count.index].role_definition_id
+  principal_id       = var.assignments[count.index].principal_id
+}
+
+variable "assignments" {
+  description = "The list of role assignments to this service principal"
+  type = list(object({
+    scope              = string
+    role_definition_id = string
+    principal_id       = string
+  }))
+  default = []
+}
+
+#call
+assignments = [
+    {
+      scope              = "/subscriptions/<sub_id>/resourceGroups/<rg_name>"
+      role_definition_id = "/subscriptions/${var.subscription}${data.azurerm_role_definition.ccwlnr.id}"
+      principal_id       = azurerm_user_assigned_identity.managedIdentity.principal_id
+    },
+    {
+      scope              = "/subscriptions/<sub_id>/resourceGroups/<rg_name>/providers/Microsoft.Network/virtualNetworks/<vnet_name/subnets/<subnet_name>"
+      role_definition_id = "/subscriptions/${var.subscription}${data.azurerm_role_definition.cvnu.id}"
+      principal_id       = azurerm_user_assigned_identity.managedIdentity.principal_id
+    }
+  ]
+}
+```
+example3
 ```tf
 variable "define_group" {
   type = map(any)
@@ -45,7 +78,7 @@ resource "harbor_project_member_group" "main" {
   ldap_group_dn = each.value.ldap_group_dn
 }
 ```
-example3
+exampl4
 ```tf
 variable "ip-config" {
   default = [
@@ -78,7 +111,7 @@ resource "azurerm_network_interface" "example" {
   }
 }
 ```
-example4
+example5
 ```tf
 variable "assign_group" {
   type = object({
@@ -140,7 +173,7 @@ resource "kubernetes_role_binding_v1" "group_role_binding" {
     ]
   }
 ```
-example5
+example6
 ```tf
 variable "assign_group" {
   description = "Group ids"
