@@ -81,6 +81,42 @@ resource "azurerm_network_interface" "example" {
 example4
 ```tf
 variable "assign_group" {
+  type = object({
+    users  = list(string)
+    groups = list(string)
+  })
+
+  default = {
+    users  = []
+    groups = []
+  }
+
+  description = "Defines the users and groups that will be admins in the namespace."
+}
+
+# Groups
+  dynamic "subject" {
+    for_each = var.assign_group.groups
+    content {
+        name      = subject.value
+        namespace = var.namespace
+        kind      = "Group"
+        api_group = "rbac.authorization.k8s.io"
+    }
+  }
+ 
+#call
+ assign_group = {
+    users = []
+    groups = [
+      "35111183-211a0-1111-b611-11111",
+      "4222285-22227-42223-a222-b222dc"
+    ]
+  }
+```
+example5
+```tf
+variable "assign_group" {
   description = "Group ids"
   type        = list(any)
 }
@@ -108,5 +144,6 @@ resource "kubernetes_role_binding" "group_role_binding" {
   }
 }
 
+#call
 assign_group     = ["35111183-211a0-1111-b611-11111", "4222285-22227-42223-a222-b222dc"]
 ```
