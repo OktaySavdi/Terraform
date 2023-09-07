@@ -1,11 +1,94 @@
 
-**Variable**
-![image](https://user-images.githubusercontent.com/3519706/165933751-ec3883a6-ac25-41ed-a4b1-d43ae366a004.png)
---------------
-![image](https://user-images.githubusercontent.com/3519706/165937421-529c7bed-0585-4d24-967d-abd6704cf67a.png)
-![image](https://user-images.githubusercontent.com/3519706/165937468-af533ca8-ba24-4442-aae0-0ad661043a57.png)
-![image](https://user-images.githubusercontent.com/3519706/165937603-5476a36c-7626-431e-b0f4-58fcc5c79505.png)
-![image](https://user-images.githubusercontent.com/3519706/165937634-ecce6da2-255f-4824-b03a-e273f3c8464b.png)
-![image](https://user-images.githubusercontent.com/3519706/165937672-c4f92347-bdb3-4b2f-bc98-b536168c1517.png)
-![image](https://user-images.githubusercontent.com/3519706/165937849-4ef2b6e4-398a-409f-8fa2-285b945c9842.png)
---------------
+**Variable Types**
+
+**1. String Variables:**
+- `string`: A simple text string.
+```yaml
+variable "region" {
+  description = "Azure region"
+  type        = string
+  default     = "East US"
+}
+```
+**2. Number Variables:**
+- `number`: A numeric value.
+```yaml
+variable "instance_count" {
+  description = "Number of instances"
+  type        = number
+  default     = 3
+}
+```
+**3. Boolean Variables:**
+- `bool`: A boolean (true/false) value.
+```yaml
+variable "enable_logging" {
+  description = "Enable logging"
+  type        = bool
+  default     = true
+}
+```
+**4. List Variables:**
+- `list(type)`: An ordered list of elements of the specified type.
+```yaml
+variable "subnets" {
+  description = "List of subnets"
+  type        = list(string)
+  default     = ["subnet-1", "subnet-2"]
+}
+```
+**5. Map Variables:**
+- `map(type)`: A map of key-value pairs where keys and values have specified types.
+```yaml
+variable "tags" {
+  description = "Key-value tags"
+  type        = map(string)
+  default     = {
+    Environment = "dev"
+    Owner       = "John Doe"
+  }
+}
+```
+**6. Object Variables:**
+- `object({ attribute1 = type1, attribute2 = type2, ... })`: An object with defined attributes and their types.
+```yaml
+variable "subnet" {
+  description = "Subnet configuration"
+  type = object({
+    name           = string
+    address_prefix = string
+  })
+  default = {
+    name           = "subnet-1"
+    address_prefix = "10.0.1.0/24"
+  }
+}
+```
+**7. Tuple Variables:**
+- `tuple([type1, type2, ...])`: An ordered tuple of elements with specified types.
+```yaml
+variable "subnet_cidr_blocks" {
+  description = "List of subnet CIDR blocks"
+  type        = tuple([string, string])
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
+}
+```
+**8. Set Variables (Experimental):**
+- `set(type)`: A collection of unique elements of the specified type.
+- Note: Sets are experimental and may not be available in all Terraform versions.
+```yaml
+variable "unique_ids" {
+  description = "Set of unique IDs"
+  type        = set(string)
+  default     = ["id-1", "id-2"]
+}
+```
+**9. Any Type Variables:**
+- `any`: A variable that can accept any type of value.
+```yaml
+variable "dynamic_value" {
+  description = "A variable with any type"
+  type        = any
+  default     = "example"
+}
+```
